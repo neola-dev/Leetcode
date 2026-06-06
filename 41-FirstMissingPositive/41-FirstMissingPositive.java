@@ -1,24 +1,25 @@
-// Last updated: 06/06/2026, 09:27:06
+// Last updated: 06/06/2026, 09:36:02
 1class Solution {
-2    public int firstMissingPositive(int[] nums) {
+2    public List<Integer> findDisappearedNumbers(int[] nums) {
 3        int n=nums.length;
 4        int i=0;
-5        while(i<n){
-6            int crt=nums[i]-1;
-7            if(nums[i]>0  && nums[i]<=n && nums[i]!=nums[crt]){
-8                int temp=nums[i];
-9                nums[i]=nums[crt];
-10                nums[crt]=temp;
-11            }
-12            else{
-13                i++;
-14            }
-15        }
-16        for(int j=0;j<n;j++){
-17            if(nums[j]!=j+1){
-18                return j+1;
-19            }
-20        }
-21        return n+1;
-22    }
-23}
+5        List<Integer> res=new ArrayList<>();
+6        while(i<n){
+7            int crt=nums[i]-1;
+8            if(nums[i]!=nums[crt]){
+9                int temp=nums[i];
+10                nums[i]=nums[crt];
+11                nums[crt]=temp;
+12            }
+13            else{
+14                i++;
+15            }
+16        }
+17        for(int j=0;j<n;j++){
+18            if(nums[j]!=j+1){
+19                res.add(j+1);
+20            }
+21        }
+22        return res;
+23    }
+24}
