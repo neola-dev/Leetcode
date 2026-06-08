@@ -1,22 +1,22 @@
-// Last updated: 04/06/2026, 11:21:14
-class Solution {
-    public int lengthOfLongestSubstring(String s) {
-        int l=0;
-        int r=0;
-        int maxLen=0;
-        int[] arr=new int[256];
-        Arrays.fill(arr,-1);
-        while(r<s.length()){
-            char ch=s.charAt(r);
-            while(arr[ch]!=-1){
-                char chL=s.charAt(l);
-                l=arr[chL]+1;
-                arr[chL]=-1;
-            }
-            maxLen=Math.max(maxLen,(r-l+1));
-            arr[ch]=r;
-            r++;
-        }
-        return maxLen;
-    }
-}
+// Last updated: 08/06/2026, 23:32:16
+1class Solution {
+2    public int lengthOfLongestSubstring(String s) {
+3        int l=0;
+4        int r=0;
+5        int maxLen=0;
+6        int[] arr=new int[256];
+7        Arrays.fill(arr,-1);
+8        while(r<s.length()){
+9            char ch=s.charAt(r);
+10            while(arr[ch]!=-1){
+11                char chL=s.charAt(l);
+12                l=arr[chL]+1;
+13                arr[chL]=-1;
+14            }
+15            maxLen=Math.max(maxLen,(r-l+1));
+16            arr[ch]=r;
+17            r++;
+18        }
+19        return maxLen;
+20    }
+21}
