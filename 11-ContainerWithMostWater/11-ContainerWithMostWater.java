@@ -1,23 +1,37 @@
-// Last updated: 09/06/2026, 12:36:17
+// Last updated: 09/06/2026, 16:42:37
 1class Solution {
-2    public int characterReplacement(String s, int k) {
-3       int l=0,r=0;
-4       int n=s.length();
-5       int[] freq=new int[26];
-6       int maxLen=1;
-7       int maxFreq=1;
-8       while(r<n){
-9            char chR=s.charAt(r);
-10            freq[chR-'A']++;
-11            maxFreq=Math.max(maxFreq,freq[chR-'A']);
-12            if((r-l+1)-maxFreq>k){
-13                char chL=s.charAt(l);
-14                freq[chL-'A']--;
-15                l++;
-16            }
-17            maxLen=Math.max(maxLen,(r-l+1));
-18            r++;
-19       } 
-20       return maxLen;
-21    }
-22}
+2    public String minWindow(String s, String t) {
+3        if(s.length()<t.length())   return "";
+4        int[] need=new int[256];
+5        int req=0;
+6        for(int i=0;i<t.length();i++){
+7            if(need[t.charAt(i)]==0)  req++;
+8            need[t.charAt(i)]++;
+9        } 
+10        int formed=0;
+11        int[] have=new int[256];
+12        int l=0,r=0,min=Integer.MAX_VALUE;
+13        int start=-1;
+14        while(r<s.length()){
+15            char ch=s.charAt(r);
+16            have[ch]++;
+17            if(need[ch]>0 && need[ch]==have[ch]){
+18                formed++;
+19            }
+20            while(formed==req){
+21                if(r-l+1<min){
+22                    min=r-l+1;
+23                    start=l;
+24                }
+25                char chL=s.charAt(l);
+26                have[chL]--;
+27                if(need[chL]>0 && have[chL]<need[chL]){
+28                    formed--;
+29                }
+30                l++;
+31            }
+32            r++;
+33        }
+34        return min==Integer.MAX_VALUE?"":s.substring(start,start+min);
+35    }
+36}
