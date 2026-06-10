@@ -1,38 +1,41 @@
-// Last updated: 04/06/2026, 11:19:43
-class Solution {
-    public String minWindow(String s, String t) {
-        if(s.length()<t.length())   return "";
-        int[] need=new int[256];
-        int req=0;
-        for(int i=0;i<t.length();i++){
-            char ch=t.charAt(i);
-            if(need[ch]==0) req++;
-            need[ch]++;
-        }
-        int l=0,r=0,start=-1,minLen=Integer.MAX_VALUE;
-        int formed=0;
-        int[] have=new int[256];
-        while(r<s.length()){
-            char chR=s.charAt(r);
-            have[chR]++;
-            if(need[chR]>0 && have[chR]==need[chR]){
-                formed++;
-            }
-            while(formed==req){
-                int len=(r-l+1);
-                if(len<minLen){
-                    minLen=Math.min(minLen,len);
-                    start=l;
-                }
-                char chL=s.charAt(l);
-                have[chL]--;
-                if(need[chL]>0 && have[chL]<need[chL]){
-                    formed--;
-                }
-                l++;
-            }
-            r++;
-        }
-        return minLen==Integer.MAX_VALUE?"":s.substring(start,start+minLen);
-    }
-}
+// Last updated: 10/06/2026, 12:20:43
+1class MinStack {
+2    Stack<Integer> st;
+3    Stack<Integer> minSt;
+4    public MinStack() {
+5        st=new Stack<>();
+6        minSt=new Stack<>();
+7    }
+8    
+9    public void push(int value) {
+10        st.push(value);
+11        if(minSt.isEmpty()){
+12            minSt.push(value);
+13        }
+14        else{
+15            minSt.push(Math.min(value,minSt.peek()));
+16        }
+17    }
+18    
+19    public void pop() {
+20        st.pop();
+21        minSt.pop();
+22    }
+23    
+24    public int top() {
+25        return st.peek();
+26    }
+27    
+28    public int getMin() {
+29        return minSt.peek();
+30    }
+31}
+32
+33/**
+34 * Your MinStack object will be instantiated and called as such:
+35 * MinStack obj = new MinStack();
+36 * obj.push(value);
+37 * obj.pop();
+38 * int param_3 = obj.top();
+39 * int param_4 = obj.getMin();
+40 */
