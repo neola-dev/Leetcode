@@ -1,4 +1,4 @@
-// Last updated: 11/06/2026, 12:47:53
+// Last updated: 11/06/2026, 13:17:08
 1class StockSpanner {
 2    Stack<int[]> st;
 3    public StockSpanner() {
