@@ -1,4 +1,4 @@
-// Last updated: 14/06/2026, 18:50:45
+// Last updated: 14/06/2026, 18:57:13
 1class Solution {
 2    public int findPeakElement(int[] nums) {
 3        int n=nums.length;
