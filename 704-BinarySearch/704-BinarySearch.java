@@ -1,6 +1,6 @@
-// Last updated: 14/06/2026, 15:43:50
+// Last updated: 14/06/2026, 15:50:47
 1class Solution {
-2    public int search(int[] nums, int target) {
+2    public int searchInsert(int[] nums, int target) {
 3        int l=0;
 4        int h=nums.length-1;
 5        while(l<=h){
@@ -15,6 +15,6 @@
 14                h=m-1;
 15            }
 16        }
-17        return -1;
+17        return l;
 18    }
 19}
