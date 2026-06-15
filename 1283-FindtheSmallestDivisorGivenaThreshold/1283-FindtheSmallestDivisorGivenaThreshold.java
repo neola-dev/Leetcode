@@ -1,30 +1,40 @@
-// Last updated: 15/06/2026, 16:31:09
+// Last updated: 15/06/2026, 17:31:08
 1class Solution {
-2    public boolean find(int[] nums,int m,int t){
-3        int sum=0;
-4        for(int num:nums){
-5            sum+=Math.ceil((double)num/m);
-6        }
-7        return sum<=t;
-8    }
-9    public int smallestDivisor(int[] nums, int threshold) {
-10        int l=1;
-11        int h=Integer.MIN_VALUE;
-12        for(int num:nums){
-13            h=Math.max(h,num);
-14        }
-15        int ans=-1;
-16        while(l<=h){
-17            int m=l+(h-l)/2;
-18            boolean res=find(nums,m,threshold);
-19            if(res){
-20                ans=m;
-21                h=m-1;
-22            }
-23            else{
-24                l=m+1;
-25            }
-26        }
-27        return ans;
-28    }
-29}
+2    public boolean findCanShip(int[] weights,int cap,int days){
+3        int day=1;
+4        int load=0;
+5        for(int wei:weights){
+6            if(load+wei>cap){
+7                day++;
+8                load=wei;
+9            }
+10            else{
+11                load+=wei;
+12            }
+13        }
+14        return day<=days;
+15    }
+16    public int shipWithinDays(int[] weights, int days) {
+17        int max=Integer.MIN_VALUE;
+18        int sum=0;
+19        for(int wei:weights){
+20            max=Math.max(wei,max);
+21            sum+=wei;
+22        }
+23        int l=max;
+24        int h=sum;
+25        int ans=-1;
+26        while(l<=h){
+27            int m=l+(h-l)/2;
+28            boolean canShip=findCanShip(weights,m,days);
+29            if(canShip){
+30                ans=m;
+31                h=m-1;
+32            }
+33            else{
+34                l=m+1;
+35            }
+36        }
+37        return ans;
+38    }
+39}
