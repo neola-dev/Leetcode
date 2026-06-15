@@ -1,4 +1,4 @@
-// Last updated: 10/06/2026, 10:14:42
+// Last updated: 15/06/2026, 15:03:28
 1class Solution {
 2    public String convert(String s, int numRows) {
 3        if(numRows>=s.length())  return s;
@@ -19,7 +19,7 @@
 18            if(flag==1){
 19                i++;
 20            }
-21            else{
+21            if(flag==-1){
 22                i--;
 23                j++;
 24            }
