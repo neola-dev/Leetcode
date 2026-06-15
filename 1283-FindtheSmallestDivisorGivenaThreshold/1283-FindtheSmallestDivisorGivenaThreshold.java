@@ -1,40 +1,35 @@
-// Last updated: 15/06/2026, 18:00:33
+// Last updated: 15/06/2026, 18:12:01
 1class Solution {
-2    public boolean canMakeBouquets(int[] bloomDay,int mid,int k,int m){
-3        int bouquets=0;
-4        int count=0;
-5        for(int bloom:bloomDay){
-6            if(bloom<=mid){
-7                count++;
-8            }
-9            else{
-10                bouquets+=(count/k);
-11                count=0;
-12            }
-13        }
-14        bouquets+=(count/k);
-15        return bouquets>=m;
-16    }
-17    public int minDays(int[] bloomDay, int m, int k) {
-18        int min=Integer.MAX_VALUE;
-19        int max=Integer.MIN_VALUE;
-20        if((long)m*k>bloomDay.length)   return -1;
-21        for(int bloom:bloomDay){
-22            min=Math.min(min,bloom);
-23            max=Math.max(max,bloom);
-24        }
-25        int l=min;
-26        int h=max;
-27        while(l<=h){
-28            int mid=l+(h-l)/2;
-29            boolean canMake=canMakeBouquets(bloomDay,mid,k,m);
-30            if(canMake){
-31                h=mid-1;
-32            }
-33            else{
-34                l=mid+1;
-35            }
-36        }
-37        return l;
-38    }
-39}
+2    public boolean helper(int[] nums,int mid,int k){
+3        int cnt=1;
+4        int sum=0;
+5        for(int num:nums){
+6            sum+=num;
+7            if(sum>mid){
+8                cnt++;
+9                sum=num;
+10            }
+11        }
+12        return cnt<=k;
+13    }
+14    public int splitArray(int[] nums, int k) {
+15        int sum=0;
+16        int max=0;
+17        for(int num:nums){
+18            sum+=num;
+19            max=Math.max(max,num);
+20        }
+21        int l=max;
+22        int r=sum;
+23        while(l<=r){
+24            int mid=(l+r)/2;
+25            if(helper(nums,mid,k)){
+26                r=mid-1;
+27            }
+28            else{
+29                l=mid+1;
+30            }
+31        }
+32        return l;
+33    }
+34}
