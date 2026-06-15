@@ -1,40 +1,40 @@
-// Last updated: 15/06/2026, 17:31:08
+// Last updated: 15/06/2026, 18:00:33
 1class Solution {
-2    public boolean findCanShip(int[] weights,int cap,int days){
-3        int day=1;
-4        int load=0;
-5        for(int wei:weights){
-6            if(load+wei>cap){
-7                day++;
-8                load=wei;
-9            }
-10            else{
-11                load+=wei;
+2    public boolean canMakeBouquets(int[] bloomDay,int mid,int k,int m){
+3        int bouquets=0;
+4        int count=0;
+5        for(int bloom:bloomDay){
+6            if(bloom<=mid){
+7                count++;
+8            }
+9            else{
+10                bouquets+=(count/k);
+11                count=0;
 12            }
 13        }
-14        return day<=days;
-15    }
-16    public int shipWithinDays(int[] weights, int days) {
-17        int max=Integer.MIN_VALUE;
-18        int sum=0;
-19        for(int wei:weights){
-20            max=Math.max(wei,max);
-21            sum+=wei;
-22        }
-23        int l=max;
-24        int h=sum;
-25        int ans=-1;
-26        while(l<=h){
-27            int m=l+(h-l)/2;
-28            boolean canShip=findCanShip(weights,m,days);
-29            if(canShip){
-30                ans=m;
-31                h=m-1;
+14        bouquets+=(count/k);
+15        return bouquets>=m;
+16    }
+17    public int minDays(int[] bloomDay, int m, int k) {
+18        int min=Integer.MAX_VALUE;
+19        int max=Integer.MIN_VALUE;
+20        if((long)m*k>bloomDay.length)   return -1;
+21        for(int bloom:bloomDay){
+22            min=Math.min(min,bloom);
+23            max=Math.max(max,bloom);
+24        }
+25        int l=min;
+26        int h=max;
+27        while(l<=h){
+28            int mid=l+(h-l)/2;
+29            boolean canMake=canMakeBouquets(bloomDay,mid,k,m);
+30            if(canMake){
+31                h=mid-1;
 32            }
 33            else{
-34                l=m+1;
+34                l=mid+1;
 35            }
 36        }
-37        return ans;
+37        return l;
 38    }
 39}
