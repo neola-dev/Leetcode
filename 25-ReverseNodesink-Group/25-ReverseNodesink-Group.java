@@ -1,4 +1,4 @@
-// Last updated: 17/06/2026, 14:08:54
+// Last updated: 17/06/2026, 15:56:43
 1/**
 2 * Definition for singly-linked list.
 3 * public class ListNode {
@@ -10,24 +10,18 @@
 9 * }
 10 */
 11class Solution {
-12    public ListNode reverseKGroup(ListNode head, int k) {
-13        if(head==null || k==1){
-14            return head;
-15        }
-16        ListNode curr=head;
-17        for(int i=0;i<k;i++){
-18            if(curr==null)  return head;
-19            curr=curr.next;
-20        }
-21        ListNode prev=null;
-22        curr=head;
-23        for(int i=0;i<k;i++){
-24            ListNode nextNode=curr.next;
-25            curr.next=prev;
-26            prev=curr;
-27            curr=nextNode;
-28        }
-29        head.next=reverseKGroup(curr,k);
-30        return prev;
-31    }
-32}
+12    public ListNode removeNthFromEnd(ListNode head, int n) {
+13        ListNode fast=head;
+14        for(int i=0;i<n;i++){
+15            fast=fast.next;
+16        }
+17        if(fast==null)  return head.next;
+18        ListNode slow=head;
+19        while(fast.next!=null){
+20            slow=slow.next;
+21            fast=fast.next;
+22        }
+23        slow.next=slow.next.next;
+24        return head;
+25    }
+26}
