@@ -1,4 +1,4 @@
-// Last updated: 17/06/2026, 13:37:42
+// Last updated: 17/06/2026, 13:38:09
 1/**
 2 * Definition for singly-linked list.
 3 * public class ListNode {
@@ -11,17 +11,17 @@
 10 */
 11class Solution {
 12    public ListNode rotateRight(ListNode head, int k) {
-13        if(k==0 || head==null)  return head;
-14        int n=1;
-15        ListNode temp=head;
+13        if(head==null || k==0) return head;
+14        ListNode temp=head;
+15        int n=1;
 16        while(temp.next!=null){
 17            n++;
 18            temp=temp.next;
 19        }
 20        temp.next=head;
 21        k=k%n;
-22        ListNode newTail=head;
-23        int steps=n-k;
+22        int steps=n-k;
+23        ListNode newTail=head;
 24        for(int i=1;i<steps;i++){
 25            newTail=newTail.next;
 26        }
