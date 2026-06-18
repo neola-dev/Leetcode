@@ -1,39 +1,43 @@
-// Last updated: 04/06/2026, 11:19:21
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
- */
-class Solution {
-    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
-        List<List<Integer>> res=new ArrayList<>();
-        if(root==null)  return res;
-        Queue<TreeNode> q=new LinkedList<>();
-        q.add(root);
-        boolean leftToRight=true;
-        while(!q.isEmpty()){
-            int size=q.size();
-            Integer[] arr=new Integer[size];
-            for(int i=0;i<size;i++){
-                TreeNode curr=q.poll();
-                int ind=leftToRight?i:size-i-1;
-                arr[ind]=curr.val;
-                if(curr.left!=null) q.add(curr.left);
-                if(curr.right!=null)    q.add(curr.right);
-            }
-            leftToRight=!leftToRight;
-            res.add(Arrays.asList(arr));
-        }
-        return res;
-    }
-}
+// Last updated: 18/06/2026, 12:06:43
+1/**
+2 * Definition for a binary tree node.
+3 * public class TreeNode {
+4 *     int val;
+5 *     TreeNode left;
+6 *     TreeNode right;
+7 *     TreeNode() {}
+8 *     TreeNode(int val) { this.val = val; }
+9 *     TreeNode(int val, TreeNode left, TreeNode right) {
+10 *         this.val = val;
+11 *         this.left = left;
+12 *         this.right = right;
+13 *     }
+14 * }
+15 */
+16class Solution {
+17    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+18        List<List<Integer>> res=new ArrayList<>();
+19        if(root==null)  return res;
+20        Queue<TreeNode> q=new LinkedList<>();
+21        q.add(root);
+22        boolean leftToRight=false;
+23        while(!q.isEmpty()){
+24            int size=q.size();
+25            Integer[] arr=new Integer[size];
+26            for(int i=0;i<size;i++){
+27                TreeNode curr=q.poll();
+28                int ind=leftToRight?size-i-1:i;
+29                arr[ind]=curr.val;
+30                if(curr.left!=null){
+31                    q.add(curr.left);
+32                }
+33                if(curr.right!=null){
+34                    q.add(curr.right);
+35                }
+36            }
+37            leftToRight=!leftToRight;
+38            res.add(Arrays.asList(arr));
+39        }
+40        return res;
+41    }
+42}
