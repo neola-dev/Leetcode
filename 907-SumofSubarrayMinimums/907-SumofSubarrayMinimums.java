@@ -1,4 +1,4 @@
-// Last updated: 18/06/2026, 10:35:14
+// Last updated: 18/06/2026, 11:12:16
 1/**
 2 * Definition for a binary tree node.
 3 * public class TreeNode {
@@ -15,13 +15,16 @@
 14 * }
 15 */
 16class Solution {
-17    public boolean isSymmetric(TreeNode root) {
-18        if(root==null)  return false;
-19        return find(root.left,root.right);
-20    }
-21    public boolean find(TreeNode p,TreeNode q){
-22        if(p==null && q==null)  return true;
-23        if(p==null || q==null || p.val!=q.val)  return false;
-24        return find(p.left,q.right) && find(p.right,q.left);
-25    }
-26}
+17    int res=0;
+18    public int diameterOfBinaryTree(TreeNode root) {
+19        find(root);
+20        return res;
+21    }
+22    public int find(TreeNode root){
+23        if(root==null)  return 0;
+24        int left=find(root.left);
+25        int right=find(root.right);
+26        res=Math.max(res,left+right);
+27        return 1+Math.max(left,right);
+28    }
+29}
