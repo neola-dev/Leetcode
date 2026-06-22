@@ -1,23 +1,25 @@
-// Last updated: 22/06/2026, 20:32:33
+// Last updated: 22/06/2026, 20:51:24
 1class Solution {
-2    public int lengthOfLongestSubstring(String s) {
-3       int n=s.length();
-4       int l=0;
-5       int r=0;
-6       int maxLen=0;
-7       int[] arr=new int[256];
-8       Arrays.fill(arr,-1);
-9       while(r<n){
-10          char chR=s.charAt(r);
-11          while(arr[chR]!=-1){
-12            char chL=s.charAt(l);
-13            l=arr[chL]+1;
-14            arr[chL]=-1;
-15          }
-16          maxLen=Math.max(maxLen,r-l+1);
-17          arr[chR]=r;
-18          r++;
-19       }
-20       return maxLen;
-21    }
-22}
+2    public void helper(int open,int closed,int n,List<String> res,StringBuilder sb){
+3        if(open==n && closed==n){
+4            res.add(sb.toString());
+5            return;
+6        }
+7        
+8        if(open<n){
+9            sb.append("(");
+10            helper(open+1,closed,n,res,sb);
+11            sb.deleteCharAt(sb.length()-1);
+12        }
+13        if(closed<open){
+14            sb.append(")");
+15            helper(open,closed+1,n,res,sb);
+16            sb.deleteCharAt(sb.length()-1);
+17        }
+18    }
+19    public List<String> generateParenthesis(int n) {
+20        List<String> res=new ArrayList<>();
+21        helper(0,0,n,res,new StringBuilder());
+22        return res;
+23    }
+24}
