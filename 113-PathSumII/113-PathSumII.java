@@ -1,4 +1,4 @@
-// Last updated: 23/06/2026, 22:56:57
+// Last updated: 23/06/2026, 23:18:13
 1/**
 2 * Definition for a binary tree node.
 3 * public class TreeNode {
@@ -15,25 +15,17 @@
 14 * }
 15 */
 16class Solution {
-17    List<List<Integer>> res=new ArrayList<>();
-18    public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
-19        int sum=0;
-20        dfs(root,sum,targetSum,new ArrayList<>());
-21        return res;
-22    }
-23    public void dfs(TreeNode root,int sum,int targetSum,ArrayList<Integer> path){
-24        if(root==null){
-25            return;
-26        }
-27        sum+=root.val;
-28        path.add(root.val);
-29        if(root.left==null && root.right==null){
-30            if(sum==targetSum){
-31                res.add(new ArrayList<>(path));
-32            }
-33        }
-34        dfs(root.left,sum,targetSum,path);
-35        dfs(root.right,sum,targetSum,path);
-36        path.remove(path.size()-1);
-37    }
-38}
+17    int maxSum=Integer.MIN_VALUE;
+18    public int dfs(TreeNode root){
+19        if(root==null)  return 0;
+20        int left=Math.max(0,dfs(root.left));
+21        int right=Math.max(0,dfs(root.right));
+22        maxSum=Math.max(maxSum,left+right+root.val);
+23        return Math.max(left,right)+root.val;
+24    }
+25    public int maxPathSum(TreeNode root) {
+26        if(root==null)  return 0;
+27        dfs(root);
+28        return maxSum;
+29    }
+30}
