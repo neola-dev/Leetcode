@@ -1,4 +1,4 @@
-// Last updated: 23/06/2026, 10:15:00
+// Last updated: 23/06/2026, 11:21:37
 1/**
 2 * Definition for a binary tree node.
 3 * public class TreeNode {
@@ -15,19 +15,30 @@
 14 * }
 15 */
 16class Solution {
-17    List<Integer> ans=new ArrayList<>();
-18    public List<Integer> rightSideView(TreeNode root) {
-19        dfs(0,root);
-20        return ans;
-21    }
-22    public void dfs(int depth,TreeNode root){
-23        if(root==null){
-24            return;
-25        }
-26        if(depth==ans.size()){
-27            ans.add(root.val);
-28        }
-29        dfs(depth+1,root.right);
-30        dfs(depth+1,root.left);
-31    }
-32}
+17    public int widthOfBinaryTree(TreeNode root) {
+18        if(root==null)  return 0;
+19        Queue<Pair<TreeNode,Long>> q=new LinkedList<>();
+20        q.add(new Pair<>(root,0L));
+21        int ans=0;
+22        while(!q.isEmpty()){
+23            int size=q.size();
+24            long min=q.peek().getValue();
+25            long first=0L,last=0L;
+26            for(int i=0;i<size;i++){
+27                Pair<TreeNode,Long> p=q.poll();
+28                TreeNode curr=p.getKey();
+29                long indx=p.getValue()-min;
+30                if(i==0)    first=indx;
+31                if(i==size-1)   last=indx;
+32                if(curr.left!=null){
+33                    q.add(new Pair<>(curr.left,2*indx+1));
+34                }
+35                if(curr.right!=null){
+36                    q.add(new Pair<>(curr.right,2*indx+2));
+37                }
+38            }
+39            ans=Math.max(ans,(int)(last-first+1));
+40        }
+41        return ans;
+42    }
+43}
