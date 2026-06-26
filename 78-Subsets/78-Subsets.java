@@ -1,19 +1,22 @@
-// Last updated: 26/06/2026, 13:09:48
+// Last updated: 26/06/2026, 13:41:49
 1class Solution {
-2    public static void recur(int ind,int[] nums,List<List<Integer>> res,List<Integer> sub,int n){
-3        if(ind==n){
-4            if(!res.contains(sub)) res.add(new ArrayList<>(sub));
-5            return;
-6        }
-7        sub.add(nums[ind]);
-8        recur(ind+1,nums,res,sub,n);
-9        sub.remove(sub.size()-1);
-10        recur(ind+1,nums,res,sub,n);
-11    }
-12    public List<List<Integer>> subsetsWithDup(int[] nums) {
-13        List<List<Integer>> res=new ArrayList<>();
-14        Arrays.sort(nums);
-15        recur(0,nums,res,new ArrayList<>(),nums.length);
-16        return res;
-17    }
-18}
+2    public void recur(int ind,int[] candidates,int sum,int target,List<Integer> sub,List<List<Integer>> res){
+3        if(ind==candidates.length){
+4            if(sum==target){
+5                res.add(new ArrayList<>(sub));
+6            }
+7            return;
+8        }   
+9        if(sum+candidates[ind]<=target){ 
+10            sub.add(candidates[ind]);
+11            recur(ind,candidates,sum+candidates[ind],target,sub,res);
+12            sub.remove(sub.size()-1);
+13        }    
+14        recur(ind+1,candidates,sum,target,sub,res);
+15    }
+16    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+17        List<List<Integer>> res=new ArrayList<>();
+18        recur(0,candidates,0,target,new ArrayList<>(),res);
+19        return res;
+20    }
+21}
