@@ -1,20 +1,19 @@
-// Last updated: 04/06/2026, 11:19:42
-class Solution {
-    public void recursion(int ind,List<List<Integer>> res,List<Integer> sub,int[] nums,int n){
-        if(ind==n){
-            res.add(new ArrayList<>(sub));
-            return;
-        }
-        sub.add(nums[ind]);
-        recursion(ind+1,res,sub,nums,n);
-        sub.remove(sub.size()-1);
-        recursion(ind+1,res,sub,nums,n);
-    }
-    public List<List<Integer>> subsets(int[] nums) {
-        List<List<Integer>> res=new ArrayList<>();
-        List<Integer> sub=new ArrayList<>();
-        int n=nums.length;
-        recursion(0,res,sub,nums,n);
-        return res;
-    }
-}
+// Last updated: 26/06/2026, 13:05:03
+1class Solution {
+2    public void recur(int ind,int[] nums,List<List<Integer>> res,List<Integer> sub,int n){
+3        if(ind==n){
+4            res.add(new ArrayList<>(sub));
+5            return;
+6        }
+7        //pick
+8        sub.add(nums[ind]);
+9        recur(ind+1,nums,res,sub,n); //move to next ind
+10        sub.remove(sub.size()-1); //not pick
+11        recur(ind+1,nums,res,sub,n); //move to next ind
+12    }
+13    public List<List<Integer>> subsets(int[] nums) {
+14        List<List<Integer>> res=new ArrayList<>();
+15        recur(0,nums,res,new ArrayList<>(),nums.length);
+16        return res;
+17    }
+18}
