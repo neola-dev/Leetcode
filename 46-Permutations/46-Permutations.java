@@ -1,25 +1,24 @@
-// Last updated: 04/06/2026, 11:20:21
-class Solution {
-    public void recursion(boolean[] vis,List<List<Integer>> res,List<Integer> sub,int[] nums,int n){
-        if(sub.size()==n){
-            res.add(new ArrayList<>(sub));
-            return;
-        }
-        for(int i=0;i<n;i++){
-            if(vis[i])  continue;
-            vis[i]=true;
-            sub.add(nums[i]);
-            recursion(vis,res,sub,nums,n);
-            sub.remove(sub.size()-1);
-            vis[i]=false;
-        }
-    }
-    public List<List<Integer>> permute(int[] nums) {
-        List<List<Integer>> res=new ArrayList<>();
-        List<Integer> sub=new ArrayList<>();
-        int n=nums.length;
-        boolean[] vis=new boolean[n];
-        recursion(vis,res,sub,nums,n);
-        return res;
-    }
-}
+// Last updated: 27/06/2026, 08:56:30
+1class Solution {
+2    public void recur(int[] nums,List<List<Integer>> res,List<Integer> sub,boolean[] vis){
+3        if(sub.size()==nums.length){
+4            res.add(new ArrayList<>(sub));
+5            return;
+6        }
+7        for(int i=0;i<nums.length;i++){
+8            if(vis[i])  continue;
+9            sub.add(nums[i]);
+10            vis[i]=true;
+11            recur(nums,res,sub,vis);
+12            sub.remove(sub.size()-1);
+13            vis[i]=false;
+14        }
+15    }
+16    public List<List<Integer>> permute(int[] nums) {
+17        List<List<Integer>> res=new ArrayList<>();
+18        int n=nums.length;
+19        boolean[] vis=new  boolean[n];
+20        recur(nums,res,new ArrayList<>(),vis);
+21        return res;
+22    }
+23}
