@@ -1,24 +1,27 @@
-// Last updated: 27/06/2026, 08:56:30
+// Last updated: 27/06/2026, 11:39:00
 1class Solution {
-2    public void recur(int[] nums,List<List<Integer>> res,List<Integer> sub,boolean[] vis){
-3        if(sub.size()==nums.length){
-4            res.add(new ArrayList<>(sub));
+2    public void recur(char[] arr,List<String> res,int n,boolean[] vis,StringBuilder sb){
+3        if(sb.length()==n){
+4            res.add(sb.toString());
 5            return;
 6        }
-7        for(int i=0;i<nums.length;i++){
+7        for(int i=0;i<arr.length;i++){
 8            if(vis[i])  continue;
-9            sub.add(nums[i]);
+9            sb.append(arr[i]);
 10            vis[i]=true;
-11            recur(nums,res,sub,vis);
-12            sub.remove(sub.size()-1);
-13            vis[i]=false;
+11            recur(arr,res,n,vis,sb);
+12            vis[i]=false;
+13            sb.deleteCharAt(sb.length()-1);
 14        }
 15    }
-16    public List<List<Integer>> permute(int[] nums) {
-17        List<List<Integer>> res=new ArrayList<>();
-18        int n=nums.length;
-19        boolean[] vis=new  boolean[n];
-20        recur(nums,res,new ArrayList<>(),vis);
-21        return res;
-22    }
-23}
+16    public String getPermutation(int n, int k) {
+17        char[] arr=new char[n];
+18        for(int i=0;i<n;i++){
+19            arr[i]=(char)((i+1)+'0');
+20        }
+21        List<String> res=new ArrayList<>();
+22        boolean[] vis=new boolean[n];
+23        recur(arr,res,n,vis,new StringBuilder());
+24        return res.get(k-1);
+25    }
+26}
