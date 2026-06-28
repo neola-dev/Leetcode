@@ -1,30 +1,30 @@
-// Last updated: 28/06/2026, 12:56:05
+// Last updated: 28/06/2026, 14:17:42
 1class Solution {
-2    public int recur(int i,int j,int n,int m,boolean[][]vis,int[][] grid){
-3        if(i<0 || j<0 || i>=n || j>=m)  return 0;
-4        if(grid[i][j]==0 || vis[i][j])  return 0;
-5        int curr=grid[i][j];
-6        vis[i][j]=true;
-7        int up=recur(i-1,j,n,m,vis,grid);
-8        int down=recur(i+1,j,n,m,vis,grid);
-9        int left=recur(i,j-1,n,m,vis,grid);
-10        int right=recur(i,j+1,n,m,vis,grid);
-11        vis[i][j]=false;
-12        return curr+Math.max(Math.max(up,down),Math.max(left,right));
-13    }
-14    public int getMaximumGold(int[][] grid) {
-15        int n=grid.length;
-16        int m=grid[0].length;
-17        int max=0;
-18        boolean[][] vis=new boolean[n][m];
-19        for(int i=0;i<n;i++){
-20            for(int j=0;j<m;j++){
-21                if(grid[i][j]!=0){
-22                    int gold=recur(i,j,n,m,vis,grid);
-23                    max=Math.max(max,gold);
-24                }
+2    public boolean isValidSudoku(char[][] board) {
+3        for(int i=0;i<9;i++){
+4            for(int j=0;j<9;j++){
+5                if(board[i][j]!='.'){
+6                    char ch=board[i][j];
+7                    if(!isSafe(i,j,board,ch)){
+8                        return false;
+9                    }
+10                }
+11            }
+12        }
+13        return true;
+14    }
+15    public boolean isSafe(int row,int col,char[][] board,char ch){
+16        for(int i=0;i<board.length;i++){
+17            if(i!=row && board[i][col]==ch)   return false;
+18            if(i!=col && board[row][i]==ch)   return false;
+19        }
+20        int startRow=3*(row/3);
+21        int startCol=3*(col/3);
+22        for(int r=startRow;r<startRow+3;r++){
+23            for(int c=startCol;c<startCol+3;c++){
+24                if((r!=row || c!=col) && board[r][c]==ch) return false;
 25            }
 26        }
-27        return max;
+27        return true;
 28    }
 29}
