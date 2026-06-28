@@ -1,32 +1,36 @@
-// Last updated: 28/06/2026, 11:16:12
+// Last updated: 28/06/2026, 11:48:34
 1class Solution {
-2    public List<Integer> diffWaysToCompute(String expression) {
-3        HashMap<String,List<Integer>> map=new HashMap<>();
-4        return solve(expression,map);
-5    }
-6    public List<Integer> solve(String expr,HashMap<String,List<Integer>> map){
-7        if(map.containsKey(expr)){
-8            return map.get(expr);
-9        }
-10        List<Integer> res=new ArrayList<>();
-11        for(int i=0;i<expr.length();i++){
-12            char ch=expr.charAt(i);
-13            if(ch=='+' || ch=='-' || ch=='*'){
-14                String left=expr.substring(0,i);
-15                String right=expr.substring(i+1);
-16                List<Integer> leftPart=solve(left,map);
-17                List<Integer> rightPart=solve(right,map);
-18                for(int l:leftPart){
-19                    for(int r:rightPart){
-20                        if(ch=='+') res.add(l+r);
-21                        else if(ch=='-')    res.add(l-r);
-22                        else    res.add(l*r);
-23                    }
-24                }
-25            }
-26        }
-27        if(res.size()==0)   res.add(Integer.parseInt(expr));
-28        map.put(expr,res);
-29        return res;
-30    }
-31}
+2    public void recur(int ind,long curr,String num,long LastOp,int target,StringBuilder sb,List<String> res){
+3        if(ind==num.length()){
+4            if(curr==target) res.add(sb.toString());
+5            return;
+6        }
+7        for(int len=1;ind+len<=num.length();len++){
+8            String sub=num.substring(ind,ind+len);
+9            if(sub.length()>1 && sub.charAt(0)=='0')    break;
+10            Long value=Long.parseLong(sub);
+11            int subLen=sb.length();
+12            if(ind==0){
+13                sb.append(sub);
+14                recur(ind+len,value,num,value,target,sb,res);
+15                sb.setLength(subLen);
+16            }
+17            else{
+18                sb.append('+').append(sub);
+19                recur(ind+len,curr+value,num,value,target,sb,res);
+20                sb.setLength(subLen);
+21                sb.append('-').append(sub);
+22                recur(ind+len,curr-value,num,-value,target,sb,res);
+23                sb.setLength(subLen);
+24                sb.append('*').append(sub);
+25                recur(ind+len,curr - LastOp + LastOp * value,num,LastOp*value,target,sb,res);
+26                sb.setLength(subLen);
+27            }
+28        }
+29    }
+30    public List<String> addOperators(String num, int target) {
+31        List<String> res=new ArrayList<>();
+32        recur(0,0,num,0,target,new StringBuilder(),res);
+33        return res;
+34    }
+35}
