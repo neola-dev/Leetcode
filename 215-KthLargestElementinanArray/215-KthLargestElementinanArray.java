@@ -1,21 +1,17 @@
-// Last updated: 29/06/2026, 10:05:02
+// Last updated: 29/06/2026, 10:18:06
 1class Solution {
-2    public int[] topKFrequent(int[] nums, int k) {
-3        HashMap<Integer,Integer> map=new HashMap<>();
-4        for(int num:nums){
-5            map.put(num,map.getOrDefault(num,0)+1);
-6        }
-7        PriorityQueue<Integer> pq=new PriorityQueue<>((a,b)->map.get(a)-map.get(b));
-8        for(int key:map.keySet()){
-9            pq.add(key);
-10            if(pq.size()>k){
-11                pq.poll();
-12            }
+2    public int[][] kClosest(int[][] points, int k) {
+3        PriorityQueue<int[]> pq=new PriorityQueue<>((a,b)->(b[0]*b[0]+b[1]*b[1])-(a[0]*a[0]+a[1]*a[1]));
+4        for(int[] p:points){
+5            pq.add(p);
+6            if(pq.size()>k){
+7                pq.poll();
+8            }
+9        }
+10        int[][] arr=new int[k][2];
+11        for(int i=0;i<k;i++){
+12            arr[i]=pq.poll();
 13        }
-14        int[] res=new int[k];
-15        for(int i=0;i<k;i++){
-16            res[i]=pq.poll();
-17        }
-18        return res;
-19    }
-20}
+14        return arr;
+15    }
+16}
