@@ -1,65 +1,65 @@
-// Last updated: 04/06/2026, 11:16:38
-class Twitter {
-    int time;
-    private Map<Integer,List<int[]>> tweetMap;
-    private Map<Integer,Set<Integer>> followMap;
-    public Twitter() {
-        tweetMap=new HashMap<>();
-        followMap=new HashMap<>();
-        time=0;
-    }
-    
-    public void postTweet(int userId, int tweetId) {
-        if(!tweetMap.containsKey(userId))   tweetMap.put(userId,new ArrayList<>());
-        tweetMap.get(userId).add(new int[]{time++,tweetId});
-    }
-    
-    public List<Integer> getNewsFeed(int userId) {
-        PriorityQueue<int[]> pq=new PriorityQueue<>((a,b)->a[0]-b[0]);
-        if(tweetMap.containsKey(userId)){
-            for(int[] tweet:tweetMap.get(userId)){
-                pq.add(tweet);
-                if(pq.size()>10){
-                    pq.poll();
-                }
-            }
-        }
-        if(followMap.containsKey(userId)){
-            for(int followee:followMap.get(userId)){
-                if(tweetMap.containsKey(followee)){
-                    for(int[] tweet:tweetMap.get(followee)){
-                        pq.add(tweet);
-                        if(pq.size()>10){
-                            pq.poll();
-                        }
-                    }
-                }
-            }
-        }
-        List<Integer> res=new ArrayList<>();
-        while(!pq.isEmpty()){
-            res.addFirst(pq.poll()[1]);
-        }
-        return res;
-    }
-    
-    public void follow(int followerId, int followeeId) {
-        followMap.putIfAbsent(followerId,new HashSet<>());
-        followMap.get(followerId).add(followeeId);
-    }
-    
-    public void unfollow(int followerId, int followeeId) {
-        if(followMap.containsKey(followerId)){
-            followMap.get(followerId).remove(followeeId);
-        }
-    }
-}
-
-/**
- * Your Twitter object will be instantiated and called as such:
- * Twitter obj = new Twitter();
- * obj.postTweet(userId,tweetId);
- * List<Integer> param_2 = obj.getNewsFeed(userId);
- * obj.follow(followerId,followeeId);
- * obj.unfollow(followerId,followeeId);
- */
+// Last updated: 29/06/2026, 13:41:20
+1class Twitter {
+2    int time;
+3    private Map<Integer,List<int[]>> tweetMap;
+4    private Map<Integer,Set<Integer>> followMap;
+5    public Twitter() {
+6        tweetMap=new HashMap<>();
+7        followMap=new HashMap<>();
+8        time=0;
+9    }
+10    
+11    public void postTweet(int userId, int tweetId) {
+12        if(!tweetMap.containsKey(userId))   tweetMap.put(userId,new ArrayList<>());
+13        tweetMap.get(userId).add(new int[]{time++,tweetId});
+14    }
+15    
+16    public List<Integer> getNewsFeed(int userId) {
+17        PriorityQueue<int[]> pq=new PriorityQueue<>((a,b)->a[0]-b[0]);
+18        if(tweetMap.containsKey(userId)){
+19            for(int[] tweet:tweetMap.get(userId)){
+20                pq.add(tweet);
+21                if(pq.size()>10){
+22                    pq.poll();
+23                }
+24            }
+25        }
+26        if(followMap.containsKey(userId)){
+27            for(int followee:followMap.get(userId)){
+28                if(tweetMap.containsKey(followee)){
+29                    for(int[] tweet:tweetMap.get(followee)){
+30                        pq.add(tweet);
+31                        if(pq.size()>10){
+32                            pq.poll();
+33                        }
+34                    }
+35                }
+36            }
+37        }
+38        List<Integer> res=new ArrayList<>();
+39        while(!pq.isEmpty()){
+40            res.addFirst(pq.poll()[1]);
+41        }
+42        return res;
+43    }
+44    
+45    public void follow(int followerId, int followeeId) {
+46        followMap.putIfAbsent(followerId,new HashSet<>());
+47        followMap.get(followerId).add(followeeId);
+48    }
+49    
+50    public void unfollow(int followerId, int followeeId) {
+51        if(followMap.containsKey(followerId)){
+52            followMap.get(followerId).remove(followeeId);
+53        }
+54    }
+55}
+56
+57/**
+58 * Your Twitter object will be instantiated and called as such:
+59 * Twitter obj = new Twitter();
+60 * obj.postTweet(userId,tweetId);
+61 * List<Integer> param_2 = obj.getNewsFeed(userId);
+62 * obj.follow(followerId,followeeId);
+63 * obj.unfollow(followerId,followeeId);
+64 */
