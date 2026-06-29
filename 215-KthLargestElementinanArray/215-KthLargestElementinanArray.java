@@ -1,17 +1,30 @@
-// Last updated: 29/06/2026, 10:18:06
-1class Solution {
-2    public int[][] kClosest(int[][] points, int k) {
-3        PriorityQueue<int[]> pq=new PriorityQueue<>((a,b)->(b[0]*b[0]+b[1]*b[1])-(a[0]*a[0]+a[1]*a[1]));
-4        for(int[] p:points){
-5            pq.add(p);
-6            if(pq.size()>k){
-7                pq.poll();
-8            }
-9        }
-10        int[][] arr=new int[k][2];
-11        for(int i=0;i<k;i++){
-12            arr[i]=pq.poll();
-13        }
-14        return arr;
-15    }
-16}
+// Last updated: 29/06/2026, 10:28:10
+1/**
+2 * Definition for singly-linked list.
+3 * public class ListNode {
+4 *     int val;
+5 *     ListNode next;
+6 *     ListNode() {}
+7 *     ListNode(int val) { this.val = val; }
+8 *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+9 * }
+10 */
+11class Solution {
+12    public ListNode mergeKLists(ListNode[] lists) {
+13        PriorityQueue<ListNode> pq=new PriorityQueue<>((a,b)->a.val-b.val);
+14        for(ListNode node:lists){
+15            if(node!=null) pq.add(node);
+16        }
+17        ListNode dum=new ListNode(-1);
+18        ListNode curr=dum;
+19        while(!pq.isEmpty()){
+20            ListNode small=pq.poll();
+21            curr.next=small;
+22            curr=curr.next;
+23            if(small.next!=null){
+24                pq.add(small.next);
+25            }
+26        }
+27        return dum.next;
+28    }
+29}
