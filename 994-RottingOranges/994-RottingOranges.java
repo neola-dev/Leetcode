@@ -1,4 +1,4 @@
-// Last updated: 30/06/2026, 11:32:37
+// Last updated: 30/06/2026, 11:32:57
 1class Solution {
 2    public int orangesRotting(int[][] grid) {
 3        int n = grid.length;
@@ -18,7 +18,7 @@
 17        int[] dir={-1,1,0,0}; //up,down,left,right
 18        int[] dic={0,0,-1,1}; //up,down,left,right
 19        int time=0;
-20        while(!q.isEmpty() && fresh>0){
+20        while(!q.isEmpty() && fresh>0){ //don't forget to add fresh>0
 21            int size=q.size();
 22            for(int i=0;i<size;i++){
 23                int[] curr=q.poll();
