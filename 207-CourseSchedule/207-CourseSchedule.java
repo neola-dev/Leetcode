@@ -1,36 +1,35 @@
-// Last updated: 04/06/2026, 11:17:54
-class Solution {
-    public boolean canFinish(int numCourses, int[][] prerequisites) {
-        int n=numCourses;
-        ArrayList<ArrayList<Integer>> adj=new ArrayList<>();
-        for(int i=0;i<numCourses;i++){
-            adj.add(new ArrayList<>());
-        }
-        int[] indegree=new int[n];
-        for(int[] arr:prerequisites){
-            int course=arr[1];
-            int prereq=arr[0];
-            adj.get(prereq).add(course);
-            indegree[course]++;
-        }
-        Queue<Integer> q=new LinkedList<>();
-        for(int i=0;i<n;i++){
-            if(indegree[i]==0){
-                q.add(i);
-            }
-        }
-        ArrayList<Integer> al=new ArrayList<>();
-        int i=0;
-        while(!q.isEmpty()){
-            int course=q.poll();
-            al.add(course);
-            for(int nei:adj.get(course)){
-                indegree[nei]--;
-                if(indegree[nei]==0){
-                    q.add(nei);
-                }
-            }
-        }
-        return al.size()==n;
-    }
-}
+// Last updated: 06/07/2026, 15:54:05
+1class Solution {
+2    public boolean canFinish(int numCourses, int[][] prerequisites) {
+3        List<List<Integer>> adj=new ArrayList<>();
+4        int n=numCourses;
+5        for(int i=0;i<n;i++){
+6            adj.add(new ArrayList<>());
+7        }
+8        Queue<Integer> q=new LinkedList<>();
+9        int[] indeg=new int[n];
+10        for(int[] prereq:prerequisites){
+11            int course=prereq[0];
+12            int pre=prereq[1];
+13            adj.get(pre).add(course);
+14            indeg[course]++;
+15        }
+16        for(int i=0;i<n;i++){
+17            if(indeg[i]==0){
+18                q.add(i);
+19            }
+20        }
+21        ArrayList<Integer> res=new ArrayList<>();
+22        while(!q.isEmpty()){
+23            int course=q.poll();
+24            res.add(course);
+25            for(int nei:adj.get(course)){
+26                indeg[nei]--;
+27                if(indeg[nei]==0){
+28                    q.add(nei);
+29                }
+30            }
+31        }
+32        return res.size()==n;
+33    }
+34}
