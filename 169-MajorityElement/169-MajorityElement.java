@@ -1,20 +1,12 @@
-// Last updated: 04/06/2026, 11:18:20
-class Solution {
-    public int majorityElement(int[] nums) {
-        int cnt=0;
-        int elmt=-1;
-        for(int num:nums){
-            if(cnt==0){
-                elmt=num;
-                cnt++;
-            }
-            else if(elmt!=num){
-                cnt--;
-            }
-            else{
-                cnt++;
-            }
-        }
-        return elmt;
-    }
-}
+// Last updated: 07/07/2026, 11:20:08
+1class Solution {
+2    public int hIndex(int[] citations) {
+3        Arrays.sort(citations);
+4        int n=citations.length;
+5        for(int i=0;i<n;i++){
+6            int h=n-i;
+7            if(citations[i]>=h) return h;
+8        }
+9        return 0;
+10    }
+11}
