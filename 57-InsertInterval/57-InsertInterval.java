@@ -1,26 +1,15 @@
-// Last updated: 04/06/2026, 11:20:06
-class Solution {
-    public int[][] insert(int[][] intervals, int[] newInterval) {
-        int i=0;
-        int n=intervals.length;
-        List<int[]> ls=new ArrayList<>();
-        //left
-        while(i<n && intervals[i][1]<newInterval[0]){
-            ls.add(intervals[i]);
-            i++;
-        }
-        //overlapping
-        while(i<n && intervals[i][0]<=newInterval[1]){
-            newInterval[0]=Math.min(newInterval[0],intervals[i][0]);
-            newInterval[1]=Math.max(newInterval[1],intervals[i][1]);
-            i=i+1;
-        }
-        ls.add(newInterval);
-        //right
-        while(i<n){
-            ls.add(intervals[i]);
-            i++;
-        }
-        return ls.toArray(new int[ls.size()][]);
-    }
-}
+// Last updated: 07/07/2026, 20:49:45
+1class Solution {
+2    public int findMinArrowShots(int[][] points) {
+3        Arrays.sort(points,(a,b)->Integer.compare(a[1],b[1]));
+4        int arrows=1;
+5        int arrPoint=points[0][1];
+6        for(int i=1;i<points.length;i++){
+7            if(points[i][0]>arrPoint){
+8                arrows++;
+9                arrPoint=points[i][1];
+10            }
+11        }
+12        return arrows;
+13    }
+14}
