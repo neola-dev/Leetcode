@@ -1,4 +1,4 @@
-// Last updated: 14/07/2026, 20:36:55
+// Last updated: 14/07/2026, 21:34:36
 1class Solution {
 2    public int networkDelayTime(int[][] times, int n, int k) {
 3        List<List<int[]>> adj=new ArrayList<>();
