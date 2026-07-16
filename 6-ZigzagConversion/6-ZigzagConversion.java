@@ -1,39 +1,24 @@
-// Last updated: 15/06/2026, 15:03:28
+// Last updated: 16/07/2026, 20:45:00
 1class Solution {
 2    public String convert(String s, int numRows) {
-3        if(numRows>=s.length())  return s;
-4        if(numRows==1)    return s;
-5        int len=(s.length()/2)+1;
-6        char[][] arr=new char[numRows][len];
-7        int i=0,j=0;
-8        int k=0;
-9        int flag=1;
-10        while(i<numRows && j<len && i>=0 && j>=0 && k<s.length()){
-11            arr[i][j]=s.charAt(k);
-12            if(i==0){
-13                flag=1;
-14            }
-15            if(i==numRows-1){
-16                flag=-1;
-17            }
-18            if(flag==1){
-19                i++;
-20            }
-21            if(flag==-1){
-22                i--;
-23                j++;
-24            }
-25            k++;
-26        }
-27        String ans="";
-28        for(i=0;i<numRows;i++){
-29            for(j=0;j<len;j++){
-30                char ch=arr[i][j];
-31                if((int)ch!=0){
-32                    ans+=ch;
-33                }
-34            }
-35        }
-36        return ans;
-37    }
-38}
+3        if(numRows>=s.length() || numRows==1) return s;
+4        List<StringBuilder> res=new ArrayList<>();
+5        for(int i=0;i<numRows;i++){
+6            res.add(new StringBuilder());
+7        }
+8        int currRow=0;
+9        boolean goingDown=true;
+10        for(int i=0;i<s.length();i++){
+11            char ch=s.charAt(i);
+12            res.get(currRow).append(ch);
+13            if(currRow==0) goingDown=true;
+14            if(currRow==numRows-1) goingDown=false;
+15            currRow+=goingDown?1:-1;
+16        }
+17        StringBuilder ans=new StringBuilder();
+18        for(StringBuilder row:res){
+19            ans.append(row);
+20        }
+21        return ans.toString();
+22    }
+23}
