@@ -1,24 +1,20 @@
-// Last updated: 04/06/2026, 11:15:46
-class Solution {
-    public int longestPalindromeSubseq(String s) {
-        int n=s.length();
-        //in lcs way...where s1 is s and s2 is rev of s
-        //if we find lcs of both s1 and s2..then it will be palindrom for sure
-        //becoz s2 is rev of s
-        String s1=s;
-        StringBuilder sb=new StringBuilder(s);
-        String s2=sb.reverse().toString();
-        int[][] dp=new int[n+1][n+1];
-        for(int i=1;i<=n;i++){
-            for(int j=1;j<=n;j++){
-                if(s1.charAt(i-1)==s2.charAt(j-1)){
-                    dp[i][j]=1+dp[i-1][j-1];
-                }
-                else{
-                    dp[i][j]=Math.max(dp[i][j-1],dp[i-1][j]);
-                }
-            }
-        }
-        return dp[n][n];
-    }
-}
+// Last updated: 20/07/2026, 09:29:21
+1class Solution {
+2    public int longestPalindromeSubseq(String s) {
+3        StringBuilder sb=new StringBuilder(s);
+4        String s2=sb.reverse().toString();
+5        int n=s.length();
+6        int[][] dp=new int[n+1][n+1];
+7        for(int i=1;i<=n;i++){
+8            for(int j=1;j<=n;j++){
+9                if(s.charAt(i-1)==s2.charAt(j-1)){
+10                    dp[i][j]=1+dp[i-1][j-1];
+11                }
+12                else{
+13                    dp[i][j]=Math.max(dp[i-1][j],dp[i][j-1]);
+14                }
+15            }
+16        }
+17        return dp[n][n];
+18    }
+19}
