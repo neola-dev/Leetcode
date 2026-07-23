@@ -1,32 +1,32 @@
-// Last updated: 04/06/2026, 11:18:50
-class Solution {
-    public List<List<String>> partition(String s) {
-        List<List<String>> res=new ArrayList<>();
-        List<String> ds=new ArrayList<>();
-        partition(0,s,res,ds);
-        return res;
-    }
-    public static void partition(int ind,String s,List<List<String>> res,List<String> ds){
-        if(ind==s.length()){
-            res.add(new ArrayList<>(ds));
-            return;
-        }
-        for(int i=ind;i<s.length();i++){
-            if(isPalindrome(s,ind,i)){
-                ds.add(s.substring(ind,i+1));
-                partition(i+1,s,res,ds);
-                ds.remove(ds.size()-1);
-            }
-        }
-    }
-    public static boolean isPalindrome(String s,int start,int end){
-        while(start<end){
-            if(s.charAt(start)!=s.charAt(end)){
-                return false;
-            }
-            start++;
-            end--;
-        }
-        return true;
-    }
-}
+// Last updated: 23/07/2026, 10:13:12
+1class Solution {
+2    public static void helper(int ind,String s,List<List<String>> res,List<String> sub){
+3        if(ind==s.length()){
+4            res.add(new ArrayList<>(sub));
+5            return;
+6        }
+7        for(int i=ind;i<s.length();i++){
+8            if(isPalin(s,ind,i)){
+9                sub.add(s.substring(ind,i+1));
+10                helper(i+1,s,res,sub);
+11                sub.remove(sub.size()-1);
+12            }
+13        }
+14    }
+15    public static boolean isPalin(String str,int st,int end){
+16        while(st<=end){
+17            if(str.charAt(st)!=str.charAt(end)){
+18                return false;
+19            }
+20            st++;
+21            end--;
+22        }
+23        return true;
+24    }
+25    public List<List<String>> partition(String s) {
+26        List<List<String>> res=new ArrayList<>();
+27        List<String> sub=new ArrayList<>();
+28        helper(0,s,res,sub);
+29        return res;
+30    }
+31}
