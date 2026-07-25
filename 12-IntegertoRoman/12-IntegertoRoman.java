@@ -1,15 +1,19 @@
-// Last updated: 25/07/2026, 10:05:26
+// Last updated: 25/07/2026, 11:18:06
 1class Solution {
-2    public String intToRoman(int num) {
-3        int[] values={1000,900,500,400,100,90,50,40,10,9,5,4,1};
-4        String[] arr={"M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I"};
-5        StringBuilder res=new StringBuilder();
-6        for(int i=0;i<values.length;i++){
-7            while(num>=values[i]){
-8                res.append(arr[i]);
-9                num-=values[i];
-10            }
-11        }
-12        return res.toString();
-13    }
-14}
+2    public int longestConsecutive(int[] nums) {
+3        HashSet<Integer> set=new HashSet<>();
+4        for(int num:nums)   set.add(num);
+5        int maxCnt=0;
+6        for(int num:set){
+7            if(!set.contains(num-1)){
+8                int cnt=1;
+9                while(set.contains(num+1)){
+10                    cnt++;
+11                    num=num+1;
+12                }
+13                maxCnt=Math.max(maxCnt,cnt);
+14            }
+15        }
+16        return maxCnt;
+17    }
+18}
