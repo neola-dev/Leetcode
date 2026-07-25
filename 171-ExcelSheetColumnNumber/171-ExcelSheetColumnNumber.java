@@ -1,10 +1,10 @@
-// Last updated: 04/06/2026, 11:18:18
-class Solution {
-    public int titleToNumber(String columnTitle) {
-        int res=0;
-        for(char i:columnTitle.toCharArray()){
-            res=res*26+(i-'A'+1);
-        }
-        return res;
-    }
-}
+// Last updated: 25/07/2026, 22:11:42
+1class Solution {
+2    public int titleToNumber(String columnTitle) {
+3        int res=0;
+4        for(char c:columnTitle.toCharArray()){
+5            res=res*26+(c-'A'+1);
+6        }
+7        return res;
+8    }
+9}
