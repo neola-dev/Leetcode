@@ -1,37 +1,38 @@
-// Last updated: 06/07/2026, 15:54:29
+// Last updated: 26/07/2026, 11:59:23
 1class Solution {
 2    public int[] findOrder(int numCourses, int[][] prerequisites) {
-3        int n=numCourses;
-4        ArrayList<ArrayList<Integer>> adj=new ArrayList<>();
-5        for(int i=0;i<numCourses;i++){
+3        List<List<Integer>> adj=new ArrayList<>();
+4        int n=numCourses;
+5        for(int i=0;i<n;i++){
 6            adj.add(new ArrayList<>());
 7        }
-8        int[] indegree=new int[n];
-9        for(int[] arr:prerequisites){
-10            int course=arr[0];
-11            int prereq=arr[1];
-12            adj.get(prereq).add(course);
-13            indegree[course]++;
+8        int[] indeg=new int[n];
+9        for(int[] preReq:prerequisites){
+10            int course=preReq[0];
+11            int pre=preReq[1];
+12            adj.get(pre).add(course);
+13            indeg[course]++;
 14        }
 15        Queue<Integer> q=new LinkedList<>();
 16        for(int i=0;i<n;i++){
-17            if(indegree[i]==0){
+17            if(indeg[i]==0){
 18                q.add(i);
 19            }
 20        }
-21        int[] topo=new int[n];
-22        int i=0;
-23        while(!q.isEmpty()){
-24            int course=q.poll();
-25            topo[i++]=course;
-26            for(int nei:adj.get(course)){
-27                indegree[nei]--;
-28                if(indegree[nei]==0){
-29                    q.add(nei);
-30                }
-31            }
-32        }
-33        if(i==n)    return topo;
-34        return new int[]{};
-35    }
-36}
+21        List<Integer> topo=new ArrayList<>();
+22        int[] ans=new int[n];
+23        int i=0;
+24        while(!q.isEmpty()){
+25            int curr=q.poll();
+26            topo.add(curr);
+27            ans[i++]=curr;
+28            for(int nei:adj.get(curr)){
+29                indeg[nei]--;
+30                if(indeg[nei]==0){
+31                    q.add(nei);
+32                }
+33            }
+34        }
+35        return topo.size()==n?ans:new int[]{};
+36    }
+37}
