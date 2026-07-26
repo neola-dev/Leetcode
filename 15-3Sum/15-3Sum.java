@@ -1,34 +1,35 @@
-// Last updated: 22/06/2026, 20:18:31
+// Last updated: 26/07/2026, 11:00:32
 1class Solution {
 2    public List<List<Integer>> threeSum(int[] nums) {
-3        Arrays.sort(nums);
-4        List<List<Integer>> res=new ArrayList<>();
-5        for(int i=0;i<nums.length;i++){
-6            if(i!=0 && nums[i]==nums[i-1])  continue;
-7            int j=i+1;
-8            int k=nums.length-1;
-9            while(j<k){
-10                int ans=nums[i]+nums[j]+nums[k];
-11                if(ans<0){
-12                    j++;
-13                }
-14                else if(ans>0){
-15                    k--;
-16                }
-17                else{
-18                    List<Integer> sub=Arrays.asList(nums[i],nums[j],nums[k]);
-19                    res.add(sub);
-20                    j++;
-21                    k--;
-22                    while(j<k && nums[j]==nums[j-1]){
-23                        j++;
-24                    }
-25                    while(j<k && nums[k]==nums[k+1]){
-26                        k--;
-27                    }
-28                }
-29            }
-30        }
-31        return res;
-32    }
-33}
+3        List<List<Integer>> res=new ArrayList<>();
+4        Arrays.sort(nums);
+5        int n=nums.length;
+6        for(int i=0;i<n;i++){
+7            if(i!=0 && nums[i]==nums[i-1]) continue;
+8            int j=i+1;
+9            int k=n-1;
+10            while(j<k){
+11                long sum=nums[i]+nums[j]+nums[k];
+12                if(sum==0){
+13                    List<Integer> sub=new ArrayList<>(Arrays.asList(nums[i],nums[j],nums[k]));
+14                    res.add(sub);
+15                    j++;
+16                    k--;
+17                    while(j<k && nums[j]==nums[j-1]){
+18                        j++;
+19                    }
+20                    while(j<k && nums[k+1]==nums[k]){
+21                        k--;
+22                    }
+23                }
+24                else if(sum<0){
+25                    j++;
+26                }
+27                else{
+28                    k--;
+29                }
+30            }
+31        }
+32        return res;
+33    }
+34}
