@@ -1,11 +1,11 @@
-// Last updated: 23/07/2026, 09:25:02
+// Last updated: 31/07/2026, 14:44:11
 1class Solution {
-2    public int recur(int i,int j,int[] arr,int[][] dp){
+2    public int memo(int i,int j,int[] arr,int[][] dp){
 3        if(i>j) return 0;
 4        if(dp[i][j]!=-1) return dp[i][j];
 5        int min=Integer.MAX_VALUE;
 6        for(int k=i;k<=j;k++){
-7            int cost=arr[j+1]-arr[i-1]+recur(i,k-1,arr,dp)+recur(k+1,j,arr,dp);
+7            int cost=arr[j+1]-arr[i-1]+memo(i,k-1,arr,dp)+memo(k+1,j,arr,dp);
 8            min=Math.min(cost,min);
 9        }
 10        return dp[i][j]=min;
@@ -29,6 +29,6 @@
 28            }
 29        }
 30        Arrays.sort(arr);
-31        return recur(1,cuts.length,arr,dp);
+31        return memo(1,cuts.length,arr,dp);
 32    }
 33}
