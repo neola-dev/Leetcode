@@ -1,35 +1,35 @@
-// Last updated: 03/08/2026, 08:47:41
-1/**
-2 * Definition for a binary tree node.
-3 * public class TreeNode {
-4 *     int val;
-5 *     TreeNode left;
-6 *     TreeNode right;
-7 *     TreeNode() {}
-8 *     TreeNode(int val) { this.val = val; }
-9 *     TreeNode(int val, TreeNode left, TreeNode right) {
-10 *         this.val = val;
-11 *         this.left = left;
-12 *         this.right = right;
-13 *     }
-14 * }
-15 */
-16class Solution {
-17    int cnt=0;
-18    int ans=-1;
-19    public int kthSmallest(TreeNode root, int k) {
-20        int cnt=1;
-21        find(root,k);
-22        return ans;
-23    }
-24    public void find(TreeNode root,int k){
-25        if(root==null) return;
-26        find(root.left,k);
-27        cnt++;
-28        if(cnt==k){
-29            ans=root.val;
-30            return;
+// Last updated: 03/08/2026, 09:26:13
+1class Solution {
+2    public String minWindow(String s, String t) {
+3        if(s.length()<t.length()) return "";
+4        int[] need=new int[256];
+5        int req=0;
+6        for(int i=0;i<t.length();i++){
+7            if(need[t.charAt(i)]==0) req++;
+8            need[t.charAt(i)]++;
+9        } 
+10        int l=0,r=0,min=Integer.MAX_VALUE;
+11        int start=-1;
+12        int[] have=new int[256];
+13        int formed=0;
+14        while(r<s.length()){
+15            have[s.charAt(r)]++;
+16            if(need[s.charAt(r)]>0 && need[s.charAt(r)]==have[s.charAt(r)]){
+17                formed++;
+18            }
+19            while(formed==req){
+20                if(r-l+1<min){
+21                    min=r-l+1;
+22                    start=l;
+23                }
+24                have[s.charAt(l)]--;
+25                if(need[s.charAt(l)]>0 && have[s.charAt(l)]<need[s.charAt(l)]){
+26                    formed--;
+27                }
+28                l++;
+29            }
+30            r++;
 31        }
-32        find(root.right,k);
+32        return min==Integer.MAX_VALUE?"":s.substring(start,start+min);
 33    }
 34}
