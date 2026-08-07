@@ -1,4 +1,4 @@
-// Last updated: 24/06/2026, 09:57:42
+// Last updated: 07/08/2026, 14:42:25
 1/**
 2 * Definition for a binary tree node.
 3 * public class TreeNode {
@@ -15,22 +15,17 @@
 14 * }
 15 */
 16class Solution {
-17    HashMap<Integer,Integer> map;
-18    int pi=0; //to access preorder since recursion doesn't go linear
-19    public TreeNode buildTree(int[] preorder, int[] inorder) {
-20        map=new HashMap<>();
-21        for(int i=0;i<inorder.length;i++){
-22            map.put(inorder[i],i); //put all elmts with ind in map since inorder has its order left->root->right we can find the elmt of preorder index and traverse
-23        }
-24        return dfs(preorder,0,inorder.length-1);
-25    }
-26    public TreeNode dfs(int[] preorder,int st,int end){
-27        if(st>end)  return null;
-28        int elmt=preorder[pi++];
-29        int mid=map.get(elmt);
-30        TreeNode root=new TreeNode(elmt);
-31        root.left=dfs(preorder,st,mid-1);
-32        root.right=dfs(preorder,mid+1,end);
-33        return root;
-34    }
-35}
+17    int maxSum=Integer.MIN_VALUE;
+18    public int dfs(TreeNode root){
+19        if(root==null)  return 0;
+20        int left=Math.max(0,dfs(root.left));
+21        int right=Math.max(0,dfs(root.right));
+22        maxSum=Math.max(maxSum,left+right+root.val);
+23        return Math.max(left,right)+root.val;
+24    }
+25    public int maxPathSum(TreeNode root) {
+26        if(root==null)  return 0;
+27        dfs(root);
+28        return maxSum;
+29    }
+30}
