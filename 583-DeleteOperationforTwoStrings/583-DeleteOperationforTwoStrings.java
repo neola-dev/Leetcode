@@ -1,4 +1,4 @@
-// Last updated: 20/07/2026, 09:44:33
+// Last updated: 11/08/2026, 16:16:00
 1class Solution {
 2    public int minDistance(String word1, String word2) {
 3        int n=word1.length();
@@ -15,7 +15,7 @@
 14            }
 15        }
 16        int lcs=dp[n][m];
-17        int steps=(n-lcs)+(m-lcs);
-18        return steps;
+17        int req=n-lcs+m-lcs;
+18        return req;
 19    }
 20}
