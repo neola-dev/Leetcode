@@ -1,4 +1,4 @@
-// Last updated: 16/07/2026, 20:45:00
+// Last updated: 16/08/2026, 21:59:42
 1class Solution {
 2    public String convert(String s, int numRows) {
 3        if(numRows>=s.length() || numRows==1) return s;
