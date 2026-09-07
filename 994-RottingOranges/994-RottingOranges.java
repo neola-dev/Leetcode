@@ -1,10 +1,10 @@
-// Last updated: 27/07/2026, 12:02:06
+// Last updated: 07/09/2026, 14:17:12
 1class Solution {
 2    public int orangesRotting(int[][] grid) {
 3        int n=grid.length;
 4        int m=grid[0].length;
-5        int fresh=0;
-6        Queue<int[]> q=new LinkedList<>();
+5        Queue<int[]> q=new LinkedList<>();
+6        int fresh=0;
 7        for(int i=0;i<n;i++){
 8            for(int j=0;j<m;j++){
 9                if(grid[i][j]==2){
@@ -20,13 +20,13 @@
 19        int time=0;
 20        while(!q.isEmpty() && fresh>0){
 21            int size=q.size();
-22            for(int s=0;s<size;s++){
+22            for(int i=0;i<size;i++){
 23                int[] curr=q.poll();
 24                int r=curr[0];
 25                int c=curr[1];
-26                for(int i=0;i<4;i++){
-27                    int nr=r+dir[i];
-28                    int nc=c+dic[i];
+26                for(int d=0;d<4;d++){
+27                    int nr=r+dir[d];
+28                    int nc=c+dic[d];
 29                    if(nr>=0 && nc>=0 && nr<n && nc<m && grid[nr][nc]==1){
 30                        grid[nr][nc]=2;
 31                        q.add(new int[]{nr,nc});
