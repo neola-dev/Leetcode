@@ -1,39 +1,32 @@
-// Last updated: 07/09/2026, 13:56:20
-1class Pair{
-2    String word;
-3    int steps;
-4    Pair(String w,int s){
-5        this.word=w;
-6        this.steps=s;
-7    }
-8}
-9class Solution {
-10    public int ladderLength(String beginWord, String endWord, List<String> wordList) {
-11        Set<String> set=new HashSet<>(wordList);
-12        if(!set.contains(endWord)) return 0;
-13        Queue<Pair> q=new LinkedList<>();
-14        q.add(new Pair(beginWord,1));
-15        while(!q.isEmpty()){
-16            Pair curr=q.poll();
-17            String word=curr.word;
-18            int steps=curr.steps;
-19            if(word.equals(endWord)){
-20                return steps;
-21            }
-22            char[] arr=word.toCharArray();
-23            for(int i=0;i<arr.length;i++){
-24                char org=arr[i];
-25                for(char c='a';c<='z';c++){
-26                    arr[i]=c;
-27                    String newWord=new String(arr);
-28                    if(set.contains(newWord)){
-29                        q.add(new Pair(newWord,steps+1));
-30                        set.remove(newWord);
-31                    }
-32                }
-33                arr[i]=org;
-34            }
-35        }
-36        return 0;
-37    }
-38}
+// Last updated: 07/09/2026, 14:10:00
+1class Solution {
+2    public int shortestPathBinaryMatrix(int[][] grid) {
+3        int n=grid.length;
+4        if(grid[0][0]==1 || grid[n-1][n-1]==1) return -1;
+5        int[][] dist=new int[n][n];
+6        for(int i=0;i<n;i++){
+7            Arrays.fill(dist[i],Integer.MAX_VALUE);
+8        }
+9        Queue<int[]> q=new LinkedList<>();
+10        q.add(new int[]{1,0,0});
+11        dist[0][0]=1;
+12        int[] dir={-1,1,0,0,-1,-1,1,1};
+13        int[] dic={0,0,-1,1,-1,1,-1,1};
+14        while(!q.isEmpty()){
+15            int[] curr=q.poll();
+16            int d=curr[0];
+17            int r=curr[1];
+18            int c=curr[2];
+19            if(r==n-1 && c==n-1) return d;
+20            for(int i=0;i<8;i++){
+21                int nr=r+dir[i];
+22                int nc=c+dic[i];
+23                if(nr>=0 && nc>=0 && nr<n && nc<n && grid[nr][nc]==0 && d+1<dist[nr][nc]){
+24                    dist[nr][nc]=d+1;
+25                    q.add(new int[]{dist[nr][nc],nr,nc});
+26                }
+27            }
+28        }
+29        return dist[n-1][n-1]==Integer.MAX_VALUE?-1:dist[n-1][n-1];
+30    }
+31}
