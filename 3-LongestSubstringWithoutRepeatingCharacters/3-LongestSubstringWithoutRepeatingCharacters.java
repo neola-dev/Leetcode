@@ -1,25 +1,21 @@
-// Last updated: 22/06/2026, 20:51:24
+// Last updated: 07/09/2026, 15:16:58
 1class Solution {
-2    public void helper(int open,int closed,int n,List<String> res,StringBuilder sb){
-3        if(open==n && closed==n){
-4            res.add(sb.toString());
-5            return;
-6        }
-7        
-8        if(open<n){
-9            sb.append("(");
-10            helper(open+1,closed,n,res,sb);
-11            sb.deleteCharAt(sb.length()-1);
-12        }
-13        if(closed<open){
-14            sb.append(")");
-15            helper(open,closed+1,n,res,sb);
-16            sb.deleteCharAt(sb.length()-1);
+2    public int lengthOfLongestSubstring(String s) {
+3        Set<Character> set=new HashSet<>();
+4        int l=0;
+5        int r=0;
+6        int max=0;
+7        while(r<s.length()){
+8            char chR=s.charAt(r);
+9            while(set.contains(chR)){
+10                char chL=s.charAt(l);
+11                set.remove(chL);
+12                l++;
+13            }
+14            max=Math.max(max,(r-l+1));
+15            set.add(chR);
+16            r++;
 17        }
-18    }
-19    public List<String> generateParenthesis(int n) {
-20        List<String> res=new ArrayList<>();
-21        helper(0,0,n,res,new StringBuilder());
-22        return res;
-23    }
-24}
+18        return max;
+19    }
+20}
