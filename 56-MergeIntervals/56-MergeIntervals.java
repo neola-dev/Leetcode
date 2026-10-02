@@ -1,29 +1,16 @@
-// Last updated: 07/09/2026, 15:12:10
+// Last updated: 02/10/2026, 22:34:55
 1class Solution {
-2    public int search(int[] nums, int target) {
-3        int n=nums.length;
-4        int l=0;
-5        int h=n-1;
-6        while(l<=h){
-7            int m=l+(h-l)/2;
-8            if(nums[m]==target) return m;
-9            if(nums[l]<=nums[m]){
-10                if(nums[l]<=target && target<=nums[m]){
-11                    h=m-1;
-12                }
-13                else{
-14                    l=m+1;
-15                }
-16            }
-17            else{
-18                if(nums[m]<=target && target<=nums[h]){
-19                    l=m+1;
-20                }
-21                else{
-22                    h=m-1;
-23                }
-24            }
-25        }
-26        return -1;
-27    }
-28}
+2    public int[][] merge(int[][] intervals) {
+3        Arrays.sort(intervals,(a,b)->a[0]-b[0]);
+4        List<int[]> res=new ArrayList<>();
+5        for(int[] inter:intervals){
+6            if(!res.isEmpty() && inter[0]<=res.getLast()[1]){
+7                res.getLast()[1]=Math.max(res.getLast()[1],inter[1]);
+8            }
+9            else{
+10                res.add(inter);
+11            }
+12        }
+13        return res.toArray(new int[res.size()][]);
+14    }
+15}
