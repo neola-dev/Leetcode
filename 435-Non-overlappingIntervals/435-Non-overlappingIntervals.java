@@ -1,34 +1,20 @@
-// Last updated: 31/07/2026, 14:03:20
-1/**
-2 * Definition for a binary tree node.
-3 * public class TreeNode {
-4 *     int val;
-5 *     TreeNode left;
-6 *     TreeNode right;
-7 *     TreeNode() {}
-8 *     TreeNode(int val) { this.val = val; }
-9 *     TreeNode(int val, TreeNode left, TreeNode right) {
-10 *         this.val = val;
-11 *         this.left = left;
-12 *         this.right = right;
-13 *     }
-14 * }
-15 */
-16class Solution {
-17    List<Integer> res=new ArrayList<>();
-18    public List<Integer> rightSideView(TreeNode root) {
-19        dfs(0,root);
-20        return res;
-21    }
-22    public void dfs(int depth,TreeNode root){
-23        if(root==null){
-24            return;
-25        }
-26        if(res.size()==depth){
-27            res.add(root.val);
-28        }
-29        dfs(depth+1,root.right);
-30        dfs(depth+1,root.left);
-31    }
-32
-33}
+// Last updated: 02/10/2026, 21:13:25
+1class Solution {
+2    public int eraseOverlapIntervals(int[][] intervals) {
+3        Arrays.sort(intervals,(a,b)->a[1]-b[1]);
+4        for(int[] inter:intervals){
+5            System.out.println(inter[0]+" "+inter[1]);
+6        }
+7        int cnt=0;
+8        int prevEnd=intervals[0][1];
+9        for(int i=1;i<intervals.length;i++){
+10            if(intervals[i][0]<prevEnd){
+11                cnt++;
+12            }
+13            else{
+14                prevEnd=intervals[i][1];
+15            }
+16        }
+17        return cnt;
+18    }
+19}
